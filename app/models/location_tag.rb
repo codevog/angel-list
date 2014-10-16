@@ -31,7 +31,7 @@ class LocationTag < ActiveRecord::Base
     end
 
     def invoke_tags_for_companies
-      where.not(statistic_users: 0).where(process_status: [0, 1]).all(:order => "process_status DESC, statistic_users")
+      where(process_status: [0, 1]).all(:order => "process_status DESC, statistic_users")
     end
   end
 

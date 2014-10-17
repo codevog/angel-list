@@ -28,5 +28,11 @@ namespace :angellist do
     puts "End  process"
   end
 
+  desc "Export to excel"
+  task :companies_to_excel => :environment do
+    puts "Begin process"
+    Company.to_xls
+    puts "End  process"
+  end
 
 end

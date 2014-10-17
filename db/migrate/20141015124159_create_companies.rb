@@ -12,7 +12,7 @@ class CreateCompanies < ActiveRecord::Migration
       t.column :pre_money_valuation, :float
       t.column :discount, :string
       t.column :equity_basis, :string
-      t.column :raised_amount, :datetime
+      t.column :raised_amount, :float
       t.column :public, :boolean
 
       t.timestamps

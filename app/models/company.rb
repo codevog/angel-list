@@ -1,3 +1,4 @@
+require 'csv'
 class Company < ActiveRecord::Base
   include Concerns::AngelApiListHandler
 
@@ -41,6 +42,24 @@ class Company < ActiveRecord::Base
         puts "Complete tag ID: #{tag.ang_list_id}"
       end
     end
+
+
+    def to_xls
+      _file_name = File.join(Rails.root.to_s, 'data', "companies#{"%d06" % Kernel.rand(99)}.csv")
+      _file = File.open(_file_name, 'w')
+      _file.close
+      CSV.open(_file_name, 'w', :col_sep => ';') do |csv|
+        csv << ['id', 'name', 'company_url', 'locations', 'markets', 'round_opened_at', 'raising_amount', 'pre_money_valuation',
+                'discount', 'equity_basis', 'raised_amount', 'public']
+        find_each() do |company|
+           csv << [company.ang_list_id, company.name, company.company_url, company.locations.try {|val| val.join(', ')},
+                   company.markets.try {|val| val.join(', ')},  company.round_opened_at, company.raising_amount,
+                   company.pre_money_valuation, company.discount, company.equity_basis , company.raised_amount, company.public]
+        end
+      end
+      p "Processed"
+    end
+
   end
 
 end
